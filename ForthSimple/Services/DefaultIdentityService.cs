@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace ForthSimple.Services
 {
-    public class DefaultIdentityService : IIdentityService
+    public class DefaultIdentityService : IUserIdentityService
     {
-        public Task<bool> LogoutAsync(int id)
+        public async Task<bool> LogoutAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> SignInAsync(UserVM userVM)
+        public async Task<bool> SignInAsync(UserSignInVM userVM)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        public Task<bool> SignUpAsync(UserVM userVM)
+        public async Task<bool> SignUpAsync(UserSignUpVM userVM)
         {
             throw new NotImplementedException();
         }

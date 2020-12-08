@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace ForthSimple.Interfaces
 {
-    public interface IIdentityService
+    public interface IUserIdentityService
     {
-        Task<bool> SignUpAsync(UserVM userVM);
+        Task<bool> SignUpAsync(UserSignUpVM userVM);
 
-        Task<bool> SignInAsync(UserVM userVM);
+        Task<bool> SignInAsync(UserSignInVM userVM);
 
         Task<bool> LogoutAsync(int id);
     }

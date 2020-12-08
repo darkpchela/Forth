@@ -1,4 +1,6 @@
+using ForthSimple.Interfaces;
 using ForthSimple.Models;
+using ForthSimple.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +31,7 @@ namespace ForthSimple
             services.AddAuthentication();
             string connection = Configuration.GetConnectionString("Default");
             services.AddDbContext<ForthDbContext>(options=> options.UseSqlServer(connection));
+            services.AddTransient<IUserIdentityService, DefaultIdentityService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

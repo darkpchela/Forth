@@ -1,4 +1,5 @@
-﻿using ForthSimple.Models;
+﻿using ForthSimple.Interfaces;
+using ForthSimple.Models;
 using ForthSimple.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,12 @@ namespace ForthSimple.Controllers
         private static readonly UserVM _testUserVM = new UserVM { Id = 1, Email = "test@gmail.com", Password = "qwerty" };
         private readonly List<UserVM> _testList = new List<UserVM> { _testUserVM };
         private readonly ForthDbContext db;
-
-        public HomeController(ILogger<HomeController> logger, ForthDbContext dbContext)
+        private readonly IUserIdentityService _identityService;
+        public HomeController(ILogger<HomeController> logger, ForthDbContext dbContext, IUserIdentityService identityService)
         {
-            _logger = logger;
             db = dbContext;
-
+            _logger = logger;
+            _identityService = identityService;
         }
 
         public IActionResult Index()
@@ -66,8 +67,11 @@ namespace ForthSimple.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignIn(UserSignInVM signInVM)
+        public async Task<IActionResult> SignIn(UserSignInVM signInVM)
         {
+            if (ModelState.IsValid && await _identityService.SignInAsync(signInVM))
+                return Json(true);
+
             return View(signInVM);
         }
 
