@@ -1,5 +1,7 @@
 ﻿using ForthSimple.Models;
+using ForthSimple.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,13 @@ namespace ForthSimple.Controllers
         private readonly ILogger<HomeController> _logger;
         private static readonly UserVM _testUserVM = new UserVM { Id = 1, Email = "test@gmail.com", Password = "qwerty" };
         private readonly List<UserVM> _testList = new List<UserVM> { _testUserVM };
+        private readonly ForthDbContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ForthDbContext dbContext)
         {
             _logger = logger;
+            db = dbContext;
+
         }
 
         public IActionResult Index()
@@ -39,7 +44,10 @@ namespace ForthSimple.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
+            db.Users.Add(new User {Email="asd@mail.ru", Password="qwe" });
+            db.SaveChanges();
             return View();
+
         }
 
         [HttpPost]

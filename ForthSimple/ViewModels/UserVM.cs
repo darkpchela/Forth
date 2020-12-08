@@ -1,7 +1,7 @@
 ﻿using ForthSimple.Etc;
 using System.ComponentModel.DataAnnotations;
 
-namespace ForthSimple.Models
+namespace ForthSimple.ViewModels
 {
     public class UserVM
     {

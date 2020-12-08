@@ -1,6 +1,6 @@
 using System;
 
-namespace ForthSimple.Models
+namespace ForthSimple.ViewModels
 {
     public class ErrorViewModel
     {
