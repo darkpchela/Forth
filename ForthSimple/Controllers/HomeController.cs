@@ -1,6 +1,7 @@
 ﻿using ForthSimple.Interfaces;
 using ForthSimple.Models;
 using ForthSimple.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -69,10 +70,16 @@ namespace ForthSimple.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(UserSignInVM signInVM)
         {
-            if (ModelState.IsValid && await _identityService.SignInAsync(signInVM))
-                return Json(true);
+            if (!ModelState.IsValid)
+                return View(signInVM);
 
-            return View(signInVM);
+            if (!await _identityService.SignInAsync(signInVM, HttpContext))
+            {
+                ModelState.AddModelError("Authorize error", "Invalid login/password");
+                return View(signInVM);
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult SignOut()
@@ -80,6 +87,7 @@ namespace ForthSimple.Controllers
             return RedirectToAction("SignIn");
         }
 
+        [Authorize]
         public IActionResult UsersTable()
         {
             return View();
