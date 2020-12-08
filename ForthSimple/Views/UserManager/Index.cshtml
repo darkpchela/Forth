@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<UserVM>
+<div class="row">
+    <div class="col-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col"><input type="checkbox" class="custom-control-input"></th>
+                    <th scope="col">User id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Blocked</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" asp-for="@user.Blocked">
+                            </div>
+                        </td>
+                        <td>@user.Id</td>
+                        <td>@user.Email</td>
+                        @if(user.Blocked)
+                        {
+                            <td>Blocked</td>
+                        }
+                        else
+                        {
+                            <td>Unblocked</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
