@@ -21,9 +21,9 @@ namespace ForthSimple.Services
             _dbContext = dbContext;
         }
 
-        public async Task<bool> LogoutAsync(int id)
+        public async Task LogoutAsync(HttpContext httpContext)
         {
-            throw new NotImplementedException();
+            await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         public async Task<bool> SignInAsync(UserSignInVM userVM, HttpContext httpContext)
@@ -45,7 +45,7 @@ namespace ForthSimple.Services
 
         public async Task<bool> SignUpAsync(UserSignUpVM userVM, HttpContext httpContext)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

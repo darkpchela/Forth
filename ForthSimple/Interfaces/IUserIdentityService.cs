@@ -10,6 +10,6 @@ namespace ForthSimple.Interfaces
 
         Task<bool> SignInAsync(UserSignInVM userVM, HttpContext htttpContext);
 
-        Task<bool> LogoutAsync(int id);
+        Task LogoutAsync(HttpContext httpContext);
     }
 }

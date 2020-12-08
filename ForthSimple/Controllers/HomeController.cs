@@ -82,9 +82,11 @@ namespace ForthSimple.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult SignOut()
+        public async Task<IActionResult> SignOut()
         {
-            return RedirectToAction("SignIn");
+            await _identityService.LogoutAsync(HttpContext);
+            
+            return RedirectToAction("Index");
         }
 
         [Authorize]
