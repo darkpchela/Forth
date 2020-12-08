@@ -1,0 +1,21 @@
+﻿@model UserSignInVM
+
+<form class="form-horizontal" action='' method="POST">
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label" for="email">E-mail</label>
+            <div class="controls">
+                <input type="text" asp-for="Email" placeholder="" class="input-xlarge">
+                <p class="help-block">Please provide your E-mail</p>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" asp-for="Password" placeholder="" class="input-xlarge">
+                <p class="help-block">Password should be at least 4 characters</p>
+            </div>
+        </div>
+    </fieldset>
+</form>

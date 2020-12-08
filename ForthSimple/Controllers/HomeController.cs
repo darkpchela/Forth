@@ -44,10 +44,7 @@ namespace ForthSimple.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            db.Users.Add(new User {Email="asd@mail.ru", Password="qwe" });
-            db.SaveChanges();
             return View();
-
         }
 
         [HttpPost]
@@ -62,11 +59,18 @@ namespace ForthSimple.Controllers
             return Json("Signed Up");
         }
 
-
+        [HttpGet]
         public IActionResult SignIn()
         {
-            return View();
+            return View(new UserSignInVM());
         }
+
+        [HttpPost]
+        public IActionResult SignIn(UserSignInVM signInVM)
+        {
+            return View(signInVM);
+        }
+
         public IActionResult SignOut()
         {
             return RedirectToAction("SignIn");
