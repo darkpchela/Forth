@@ -1,13 +1,10 @@
-﻿using ForthSimple.Etc;
-using System.ComponentModel.DataAnnotations;
-
-namespace ForthSimple.ViewModels
+﻿namespace ForthSimple.ViewModels
 {
     public class UserVM
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public StatusEnum Status { get; set; } = StatusEnum.Normal;
+        public bool Blocked { get; set; }
     }
 }

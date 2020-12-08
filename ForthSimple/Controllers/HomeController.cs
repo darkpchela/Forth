@@ -15,16 +15,14 @@ namespace ForthSimple.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private static readonly UserVM _testUserVM = new UserVM { Id = 1, Email = "test@gmail.com", Password = "qwerty" };
-        private readonly List<UserVM> _testList = new List<UserVM> { _testUserVM };
-        private readonly ForthDbContext db;
-        private readonly IUserIdentityService _identityService;
-        public HomeController(ILogger<HomeController> logger, ForthDbContext dbContext, IUserIdentityService identityService)
+        private readonly ILogger<HomeController> logger;
+        private readonly ForthDbContext dbContext;
+        private readonly ICookieIdentityService identityService;
+        public HomeController(ILogger<HomeController> logger, ForthDbContext dbContext, ICookieIdentityService identityService)
         {
-            db = dbContext;
-            _logger = logger;
-            _identityService = identityService;
+            this.dbContext = dbContext;
+            this.logger = logger;
+            this.identityService = identityService;
         }
 
         public IActionResult Index()
@@ -46,19 +44,23 @@ namespace ForthSimple.Controllers
         [HttpGet]
         public IActionResult SignUp()
         {
-            return View();
+            return View(new UserSignUpVM());
         }
 
         [HttpPost]
-        public IActionResult SignUp(UserSignUpVM signUpVM)
+        public async Task<IActionResult> SignUp(UserSignUpVM signUpVM)
         {
-            if (_testList.Any(u => u.Email == signUpVM.Email))
-                ModelState.AddModelError("Email", "Email address is already registered");
-
             if (!ModelState.IsValid)
                 return View(signUpVM);
-            
-            return Json("Signed Up");
+
+            var res = await identityService.SignUpAsync(signUpVM, HttpContext);
+            if (!res)
+            {
+                ModelState.AddModelError("Register error","User already exists");
+                return View(signUpVM);
+            }
+            else
+                return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -73,7 +75,7 @@ namespace ForthSimple.Controllers
             if (!ModelState.IsValid)
                 return View(signInVM);
 
-            if (!await _identityService.SignInAsync(signInVM, HttpContext))
+            if (!await identityService.SignInAsync(signInVM, HttpContext))
             {
                 ModelState.AddModelError("Authorize error", "Invalid login/password");
                 return View(signInVM);
@@ -84,7 +86,7 @@ namespace ForthSimple.Controllers
 
         public async Task<IActionResult> SignOut()
         {
-            await _identityService.LogoutAsync(HttpContext);
+            await identityService.LogoutAsync(HttpContext);
             
             return RedirectToAction("Index");
         }
