@@ -30,12 +30,12 @@ namespace ForthSimple
             services.AddAuthentication();
             string connection = Configuration.GetConnectionString("Default");
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/SignIn")
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/SignIn")
                 );
             services.AddControllersWithViews();
             services.AddAutomapperProfiles();
             services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
-            services.AddTransient<ICookieIdentityService, DefaultIdentityService>();
+            services.AddTransient<ICookieBasedAuthenticationService, DefaultAuthenticationService>();
             services.AddTransient<IUserManageService, DefaultUserManageService>();
         }
 
@@ -48,7 +48,7 @@ namespace ForthSimple
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Account/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace ForthSimple.Services
 {
-    public class DefaultIdentityService : ICookieIdentityService
+    public class DefaultAuthenticationService : ICookieBasedAuthenticationService
     {
         private readonly ForthDbContext dbContext;
         private readonly IMapper mapper;
 
-        public DefaultIdentityService(ForthDbContext dbContext, IMapper mapper)
+        public DefaultAuthenticationService(ForthDbContext dbContext, IMapper mapper)
         {
             this.dbContext = dbContext;
             this.mapper = mapper;

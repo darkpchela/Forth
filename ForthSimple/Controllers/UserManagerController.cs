@@ -12,10 +12,12 @@ namespace ForthSimple.Controllers
     public class UserManagerController : Controller
     {
         private readonly IUserManageService userManageService;
+        private readonly ICookieBasedAuthenticationService authenticationService;
 
-        public UserManagerController(IUserManageService userManageService)
+        public UserManagerController(IUserManageService userManageService, ICookieBasedAuthenticationService authenticationService)
         {
             this.userManageService = userManageService;
+            this.authenticationService = authenticationService;
         }
 
         [HttpGet]

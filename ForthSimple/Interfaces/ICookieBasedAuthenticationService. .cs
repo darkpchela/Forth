@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ForthSimple.Interfaces
 {
-    public interface ICookieIdentityService
+    public interface ICookieBasedAuthenticationService
     {
         Task<bool> SignUpAsync(UserSignUpVM userVM, HttpContext httpContext);
 

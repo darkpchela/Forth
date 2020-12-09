@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ForthSimple.Controllers
 {
-    public class HomeController : Controller
+    public class AccountController : Controller
     {
-        private readonly ICookieIdentityService identityService;
+        private readonly ICookieBasedAuthenticationService authenticationService;
         private readonly IMapper mapper;
 
-        public HomeController(ICookieIdentityService identityService, IMapper mapper)
+        public AccountController(ICookieBasedAuthenticationService authenticationService, IMapper mapper)
         {
-            this.identityService = identityService;
+            this.authenticationService = authenticationService;
             this.mapper = mapper;
         }
 
@@ -28,7 +28,7 @@ namespace ForthSimple.Controllers
         {
             if (!ModelState.IsValid)
                 return View(signUpVM);
-            var sinedUp = await identityService.SignUpAsync(signUpVM, HttpContext);
+            var sinedUp = await authenticationService.SignUpAsync(signUpVM, HttpContext);
             if (!sinedUp)
             {
                 ModelState.AddModelError("Register error", "User already exists");
@@ -37,7 +37,7 @@ namespace ForthSimple.Controllers
             else
             {
                 var signInVm = mapper.Map<UserSignInVM>(signUpVM);
-                var signedIn = await identityService.SignInAsync(signInVm, HttpContext);
+                var signedIn = await authenticationService.SignInAsync(signInVm, HttpContext);
                 if (signedIn)
                     return RedirectToAction(nameof(UserManagerController.Index), nameof(UserManagerController).Replace("Controller", ""));
                 else
@@ -56,7 +56,7 @@ namespace ForthSimple.Controllers
         {
             if (!ModelState.IsValid)
                 return View(signInVM);
-            if (!await identityService.SignInAsync(signInVM, HttpContext))
+            if (!await authenticationService.SignInAsync(signInVM, HttpContext))
             {
                 ModelState.AddModelError("Authorize error", "Invalid login/password");
                 return View(signInVM);
@@ -64,10 +64,15 @@ namespace ForthSimple.Controllers
             return RedirectToAction(nameof(UserManagerController.Index), nameof(UserManagerController).Replace("Controller", ""));
         }
 
+        public IActionResult Exception()
+        {
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> SignOut()
         {
-            await identityService.LogoutAsync(HttpContext);
+            await authenticationService.LogoutAsync(HttpContext);
             return RedirectToAction(nameof(SignIn));
         }
     }
