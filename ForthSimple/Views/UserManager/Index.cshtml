@@ -1,33 +1,54 @@
 ﻿@model IList<UserVM>
 
-<form asp-controller="Model.Users[i]Manager" method="post">
+<form asp-controller="Model.Users[i]Manager" method="post" class="col-8 offset-2 p-0">
     <div>
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <button class="btn btn-success" asp-action="Unblock" type="submit">Unblock</button>
-                <button class="btn btn-warning" asp-action="Block" type="submit">Block</button>
-                <button class="btn btn-danger" asp-action="Delete" type="submit">Delete</button>
+        <div class="btn-toolbar col-6 offset-3 mt-0 justify-content-center">
+            <div class="btn-group border border-bottom-0">
+                <button class="btn btn-light" asp-action="Unblock" type="submit">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-unlock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+                        <path fill-rule="evenodd" d="M8.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+                    </svg>
+                </button>
+                <button class="btn btn-light" asp-action="Block" type="submit">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+                    </svg>
+                </button>
+                <button class="btn btn-light" asp-action="Delete" type="submit">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                    </svg>
+                </button>
             </div>
         </div>
-        <div class="col-12">
-            <table class="table table-bordered">
+        <div class="col-12 mt-0">
+            <table class="table table-bordered table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th scope="col"><input type="checkbox" /></th>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Registration</th>
-                        <th scope="col">Last visit</th>
-                        <th scope="col">Blocked</th>
+                        <th scope="col" class="col-1" align="center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkBoxMain" />
+                                <label class="custom-control-label" for="checkBoxMain">Select all</label>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            Id
+                        </th>
+                        <th scope="col" class="col-3">Name</th>
+                        <th scope="col" class="col-3">Email</th>
+                        <th scope="col" class="col-2">Registration</th>
+                        <th scope="col" class="col-2">Last visit</th>
+                        <th scope="col" class="col-1">Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table">
                     @for (int i = 0; i < Model.Count; i++)
                     {
                         <tr>
                             <td>
-                                <div class="custom-control custom-checkbox">
+                                <div class="text-center">
                                     <input type="number" asp-for="@Model[i].Id" value="@Model[i].Id" hidden />
                                     <input type="checkbox" asp-for="@Model[i].Selected" />
                                 </div>
@@ -36,7 +57,7 @@
                             <td>@Model[i].FirstName @Model[i].LastName</td>
                             <td>@Model[i].Email</td>
                             <td>@Model[i].RegisterDate.ToString()</td>
-                            <td>@Model[i].LastOnlineDate.ToShortTimeString()</td>
+                            <td>@Model[i].LastOnlineDate.ToString()</td>
                             @if (Model[i].Blocked)
                             {
                                 <td>Blocked</td>
@@ -52,3 +73,6 @@
         </div>
     </div>
 </form>
+@section Scripts{ 
+<script src="~/js/checkbox.js" ></script>
+}
