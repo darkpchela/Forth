@@ -28,8 +28,8 @@ namespace ForthSimple.Controllers
         {
             if (!ModelState.IsValid)
                 return View(signUpVM);
-            var res = await identityService.SignUpAsync(signUpVM, HttpContext);
-            if (!res)
+            var sinedUp = await identityService.SignUpAsync(signUpVM, HttpContext);
+            if (!sinedUp)
             {
                 ModelState.AddModelError("Register error", "User already exists");
                 return View(signUpVM);
@@ -37,7 +37,11 @@ namespace ForthSimple.Controllers
             else
             {
                 var signInVm = mapper.Map<UserSignInVM>(signUpVM);
-                return RedirectToAction(nameof(SignIn), signInVm);
+                var signedIn = await identityService.SignInAsync(signInVm, HttpContext);
+                if (signedIn)
+                    return RedirectToAction(nameof(UserManagerController.Index), nameof(UserManagerController).Replace("Controller", ""));
+                else
+                    return RedirectToAction(nameof(SignIn));
             }
         }
 

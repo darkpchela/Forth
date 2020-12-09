@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -33,6 +34,8 @@ namespace ForthSimple.Services
             var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == userVM.Email && u.Password == userVM.Password);
             if (user is null)
                 return false;
+            user.LastOnlineDate = DateTime.Now;
+            await dbContext.SaveChangesAsync();
             await Authenticate(httpContext, userVM.Email);
             return true;
         }
@@ -42,6 +45,7 @@ namespace ForthSimple.Services
             var user = mapper.Map<User>(userVM);
             if (await dbContext.Users.AnyAsync(u => u.Email == userVM.Email))
                 return false;
+            user.RegisterDate = DateTime.Now;
             await dbContext.Users.AddAsync(user);
             dbContext.SaveChanges();
             return true;

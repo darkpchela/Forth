@@ -22,16 +22,6 @@ namespace ForthSimple.Services
             this.mapper = mapper;
         }
 
-        public Task<bool> BlockUserAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> BlockUsersAsync(IEnumerable<int> ids)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<UserVM> GetAll()
         {
             var users = dbContext.Users.AsNoTracking();
@@ -39,14 +29,43 @@ namespace ForthSimple.Services
             return usersVM;
         }
 
-        public Task<bool> UnblockUserAsync(int id)
+        public async Task<bool> BlockUsersAsync(IEnumerable<int> ids)
         {
-            throw new NotImplementedException();
+            var users = await GetSelectedUsers(ids);
+            foreach (var user in users)
+            {
+                user.Blocked = true;
+            }
+            await dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<bool> UnblockUsersAsync(IEnumerable<int> ids)
+        public async Task<bool> UnblockUsersAsync(IEnumerable<int> ids)
         {
-            throw new NotImplementedException();
+            var users = await GetSelectedUsers(ids);
+            foreach (var user in users)
+            {
+                user.Blocked = false;
+            }
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteUsersAsync(IEnumerable<int> ids)
+        {
+            var users = await GetSelectedUsers(ids);
+            foreach (var user in users)
+            {
+                dbContext.Users.Remove(user);
+            }
+            await dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        private async Task<List<User>> GetSelectedUsers(IEnumerable<int> ids)
+        {
+            var selectedUsers = await dbContext.Users.Where(u => ids.Contains(u.Id.Value)).ToListAsync();
+            return selectedUsers;
         }
     }
 }

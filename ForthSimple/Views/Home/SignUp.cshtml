@@ -3,6 +3,20 @@
 <form class="form-horizontal" asp-controller="Home" asp-action="SignUp" method="POST">
     <fieldset>
         <div class="control-group">
+            <label class="control-label" for="email">First name:</label>
+            <div class="controls">
+                <input type="text" asp-for="FirstName" class="input-xlarge">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="email">Last name</label>
+            <div class="controls">
+                <input type="text" asp-for="LastName" class="input-xlarge">
+            </div>
+        </div>
+
+        <div class="control-group">
             <label class="control-label" for="email">E-mail</label>
             <div class="controls">
                 <input type="text" asp-for="Email" class="input-xlarge">
