@@ -1,6 +1,7 @@
 using AutoMapper;
 using ForthSimple.Extensions;
 using ForthSimple.Interfaces;
+using ForthSimple.Middlewares;
 using ForthSimple.Models;
 using ForthSimple.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -56,6 +57,7 @@ namespace ForthSimple
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<CheckUserBlockMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

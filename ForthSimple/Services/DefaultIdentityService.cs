@@ -47,7 +47,7 @@ namespace ForthSimple.Services
                 return false;
             user.RegisterDate = DateTime.Now;
             await dbContext.Users.AddAsync(user);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
             return true;
         }
 
