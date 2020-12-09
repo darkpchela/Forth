@@ -1,4 +1,5 @@
-﻿using ForthSimple.Interfaces;
+﻿using AutoMapper;
+using ForthSimple.Interfaces;
 using ForthSimple.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,15 +9,12 @@ namespace ForthSimple.Controllers
     public class HomeController : Controller
     {
         private readonly ICookieIdentityService identityService;
+        private readonly IMapper mapper;
 
-        public HomeController(ICookieIdentityService identityService)
+        public HomeController(ICookieIdentityService identityService, IMapper mapper)
         {
             this.identityService = identityService;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -37,7 +35,10 @@ namespace ForthSimple.Controllers
                 return View(signUpVM);
             }
             else
-                return RedirectToAction("Index");
+            {
+                var signInVm = mapper.Map<UserSignInVM>(signUpVM);
+                return RedirectToAction(nameof(SignIn), signInVm);
+            }
         }
 
         [HttpGet]
@@ -56,13 +57,13 @@ namespace ForthSimple.Controllers
                 ModelState.AddModelError("Authorize error", "Invalid login/password");
                 return View(signInVM);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(UserManagerController.Index), nameof(UserManagerController));
         }
 
         public async Task<IActionResult> SignOut()
         {
             await identityService.LogoutAsync(HttpContext);
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(SignIn));
         }
     }
 }

@@ -28,13 +28,14 @@ namespace ForthSimple
             services.AddControllersWithViews();
             services.AddAuthentication();
             string connection = Configuration.GetConnectionString("Default");
-            services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
-            services.AddTransient<ICookieIdentityService, DefaultIdentityService>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Home/SignIn")
                 );
             services.AddControllersWithViews();
             services.AddAutomapperProfiles();
+            services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
+            services.AddTransient<ICookieIdentityService, DefaultIdentityService>();
+            services.AddTransient<IUserManageService, DefaultUserManageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +60,7 @@ namespace ForthSimple
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=UserManager}/{action=Index}");
             });
         }
     }

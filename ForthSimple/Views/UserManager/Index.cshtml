@@ -5,7 +5,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th scope="col"><input type="checkbox" class="custom-control-input"></th>
+                    <th scope="col"><input type="checkbox" class="custom-control-input" /></th>
                     <th scope="col">User id</th>
                     <th scope="col">Email</th>
                     <th scope="col">Blocked</th>
@@ -17,7 +17,7 @@
                     <tr>
                         <td>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" asp-for="@user.Blocked">
+                                <input type="checkbox" asp-for="@user.Blocked" value="@user.Blocked" />
                             </div>
                         </td>
                         <td>@user.Id</td>

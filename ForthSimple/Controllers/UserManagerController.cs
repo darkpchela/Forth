@@ -19,9 +19,9 @@ namespace ForthSimple.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await userManageService.GetAllAsync());
+            return View(userManageService.GetAll());
         }
     }
 }

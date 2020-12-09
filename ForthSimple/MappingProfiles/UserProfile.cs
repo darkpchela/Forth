@@ -10,6 +10,7 @@ namespace ForthSimple.MappingProfiles
         {
             CreateMap<UserVM, User>().ReverseMap();
             CreateMap<UserSignUpVM, User>();
+            CreateMap<UserSignUpVM, UserSignInVM>();
         }
     }
 }

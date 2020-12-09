@@ -44,7 +44,6 @@ namespace ForthSimple.Services
                 return false;
             await dbContext.Users.AddAsync(user);
             dbContext.SaveChanges();
-            await Authenticate(httpContext, user.Email);
             return true;
         }
 
