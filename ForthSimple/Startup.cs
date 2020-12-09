@@ -44,7 +44,7 @@ namespace ForthSimple
             }
             else
             {
-                app.UseExceptionHandler("/Account/Error");
+                app.UseExceptionHandler("/Account/Exception");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -58,6 +58,7 @@ namespace ForthSimple
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=UserManager}/{action=Index}");
+                endpoints.MapFallbackToController("SignIn", "Account");
             });
         }
     }

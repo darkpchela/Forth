@@ -18,8 +18,11 @@ namespace ForthSimple.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignUp()
+        public async Task<IActionResult> SignUp()
         {
+            if (User.Identity.IsAuthenticated)
+                await authenticationService.LogoutAsync(HttpContext);
+
             return View(new UserSignUpVM());
         }
 
@@ -46,8 +49,10 @@ namespace ForthSimple.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
+            if (User.Identity.IsAuthenticated)
+                await authenticationService.LogoutAsync(HttpContext);
             return View(new UserSignInVM());
         }
 

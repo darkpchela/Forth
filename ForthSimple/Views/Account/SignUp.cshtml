@@ -1,51 +1,48 @@
 ﻿@model UserSignUpVM
 
-    <div class="row col-4 offset-4 justify-content-center">
-        <form class="form-horizontal w-100 p-4 align-content-center text-center" asp-controller="Account" asp-action="SignUp" method="POST">
-            <fieldset>
-                <div class="control-group mt-3">
-                    <label class="control-label" for="email">First name:</label>
-                    <div class="controls">
-                        <input type="text" asp-for="FirstName" class="input-xlarge">
-                    </div>
+<div >
+    <form class="form-horizontal col-4 offset-4 p-1 text-center float-left" asp-controller="Account" asp-action="SignUp" method="POST">
+            <div class="control-group">
+                <label class="control-label" for="email">First name:</label>
+                <div class="controls">
+                    <input type="text" asp-for="FirstName" class="form-control">
                 </div>
+            </div>
 
-                <div class="control-group mt-3">
-                    <label class="control-label" for="email">Last name</label>
-                    <div class="controls">
-                        <input type="text" asp-for="LastName" class="input-xlarge">
-                    </div>
+            <div class="control-group mt-3">
+                <label class="control-label" for="email">Last name:</label>
+                <div class="controls">
+                    <input type="text" asp-for="LastName" class="form-control">
                 </div>
+            </div>
 
-                <div class="control-group mt-3">
-                    <label class="control-label" for="email">E-mail</label>
-                    <div class="controls">
-                        <input type="text" asp-for="Email" class="input-xlarge">
-                    </div>
+            <div class="control-group mt-3">
+                <label class="control-label" for="email">E-mail:</label>
+                <div class="controls">
+                    <input type="text" asp-for="Email" class="form-control">
                 </div>
+            </div>
 
-                <div class="control-group mt-3">
-                    <label class="control-label" for="password">Password</label>
-                    <div class="controls">
-                        <input type="password" asp-for="Password" class="input-xlarge">
-                    </div>
+            <div class="control-group mt-3">
+                <label class="control-label" for="password">Password:</label>
+                <div class="controls">
+                    <input type="password" asp-for="Password" class="form-control">
                 </div>
+            </div>
 
-                <div class="control-group mt-3">
-                    <label class="control-label" for="password_confirm">Password (Confirm)</label>
-                    <div class="controls">
-                        <input type="password" asp-for="ConfirmPassword" class="input-xlarge">
-                    </div>
+            <div class="control-group mt-3">
+                <label class="control-label" for="password_confirm">Confirm password:</label>
+                <div class="controls">
+                    <input type="password" asp-for="ConfirmPassword" class="form-control">
                 </div>
+            </div>
 
-                <div class="control-group mt-3">
-                    <div class="controls">
-                        <button class="btn btn-outline-dark">Sign Up</button>
-                    </div>
+            <div class="control-group mt-3">
+                <div class="controls">
+                    <button class="btn btn-outline-dark">Sign Up</button>
                 </div>
-
-                <div asp-validation-summary="All" class="w-100 text-danger mt-4 text-nowrap">
-                </div>
-            </fieldset>
-        </form>
+            </div>
+    </form>
+    <div asp-validation-summary="All" class="text-danger position-absolute" style="top: 15vh; right:10vw;">
     </div>
+</div>
