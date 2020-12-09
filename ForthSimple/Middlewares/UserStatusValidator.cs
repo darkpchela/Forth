@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ForthSimple.Middlewares
 {
-    public class CheckUserBlockMiddleware
+    public class UserStatusValidator
     {
         private readonly RequestDelegate _next;
 
-        public CheckUserBlockMiddleware(RequestDelegate next)
+        public UserStatusValidator(RequestDelegate next)
         {
             this._next = next;
         }
