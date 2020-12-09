@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="UserManager" asp-action="Index">ForthSimple</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,23 +21,24 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <span class="nav-justified">@User.Identity.Name</span>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="SignOut">Sign out</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignUp">Sign Up</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="SignUp">Sign Up</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignIn">Sign in</a>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="SignIn">Sign in</a>
                             </li>
                         }
                     </ul>
                 </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                <span class="navbar-text text-light border border-light m-2">@User.Identity.Name</span>
+                }
             </div>
         </nav>
     </header>

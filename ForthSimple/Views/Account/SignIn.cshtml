@@ -1,30 +1,29 @@
 ﻿@model UserSignInVM
-
-<form class="form-horizontal" asp-controller="Account" asp-action="SignIn" method="POST">
-    <fieldset>
-        <div class="control-group">
-            <label class="control-label" for="email">E-mail</label>
-            <div class="controls">
-                <input type="text" asp-for="Email" placeholder="" class="input-xlarge">
-                <p class="help-block">Please provide your E-mail</p>
+<div class="row w-75 h-75 col-md-4 offset-md-4 justify-content-md-center" >
+    <form class="form-horizontal w-100 p-4 m-3 align-content-center text-center"  asp-controller="Account" asp-action="SignIn" method="POST">
+        <fieldset class="">
+            <div class="control-group mt-3">
+                <label class="control-label" for="email">E-mail:</label>
+                <div class="controls">
+                    <input type="text" asp-for="Email" class="form-control">
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <label class="control-label" for="password">Password</label>
-            <div class="controls">
-                <input type="password" asp-for="Password" placeholder="" class="input-xlarge">
-                <p class="help-block">Password should be at least 4 characters</p>
+            <div class="control-group mt-3">
+                <label class="control-label" for="password">Password:</label>
+                <div class="controls">
+                    <input type="password" asp-for="Password" placeholder="" class="form-control">
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <div class="controls">
-                <button class="btn btn-success">Sign In</button>
+            <div class="control-group mt-3">
+                <div class="controls">
+                    <button class="btn btn-outline-dark">Sign In</button>
+                </div>
             </div>
-        </div>
 
-        <div asp-validation-summary="All">
-        </div>
-    </fieldset>
-</form>
+            <div asp-validation-summary="All" class="w-100 text-danger m-auto mt-4">
+            </div>
+        </fieldset>
+    </form>
+</div>
