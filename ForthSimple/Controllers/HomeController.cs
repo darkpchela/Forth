@@ -57,9 +57,10 @@ namespace ForthSimple.Controllers
                 ModelState.AddModelError("Authorize error", "Invalid login/password");
                 return View(signInVM);
             }
-            return RedirectToAction(nameof(UserManagerController.Index), nameof(UserManagerController));
+            return RedirectToAction(nameof(UserManagerController.Index), nameof(UserManagerController).Replace("Controller", ""));
         }
 
+        [HttpGet]
         public async Task<IActionResult> SignOut()
         {
             await identityService.LogoutAsync(HttpContext);
