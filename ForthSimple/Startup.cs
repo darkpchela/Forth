@@ -31,9 +31,12 @@ namespace ForthSimple
                 );
             services.AddControllersWithViews();
             services.AddAutomapperProfiles();
-            services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
-            services.AddTransient<ICookieBasedAuthenticationService, DefaultAuthenticationService>();
-            services.AddTransient<IUserManageService, DefaultUserManageService>();
+            //services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
+            //services.AddTransient<ICookieBasedAuthenticationService, DefaultAuthenticationService>();
+            //services.AddTransient<IUserManageService, DefaultUserManageService>();
+            services.AddIdentityContext(Configuration);
+            services.AddTransient<IIdentityUnitOfWork, IdentityUnitOfWork>();
+            services.AddTransient<IIdentityService, IdentityService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,7 +55,7 @@ namespace ForthSimple
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseUserStatusValidator();
+            //app.UseUserStatusValidator();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

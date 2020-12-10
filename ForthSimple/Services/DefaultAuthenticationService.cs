@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using iden = ForthSimple.Identity.Entities;
 
 namespace ForthSimple.Services
 {
@@ -47,6 +48,7 @@ namespace ForthSimple.Services
                 return false;
             user.RegisterDate = DateTime.Now;
             await dbContext.Users.AddAsync(user);
+            var iUser = new iden.User {Email=userVM.Email, UserName = userVM.Email };
             await dbContext.SaveChangesAsync();
             return true;
         }
