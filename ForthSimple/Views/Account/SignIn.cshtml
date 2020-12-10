@@ -1,7 +1,6 @@
 ﻿@model UserSignInVM
-<div class="row w-75 h-75 col-md-4 offset-md-4 justify-content-md-center" >
-    <form class="form-horizontal w-100 p-4 m-3 align-content-center text-center"  asp-controller="Account" asp-action="SignIn" method="POST">
-        <fieldset class="">
+<div class="col-10 offset-1">
+    <form class="form-horizontal col-4 offset-4 p-1 text-center w-75"  asp-controller="Account" asp-action="SignIn" method="POST">
             <div class="control-group mt-3">
                 <label class="control-label" for="email">Login:</label>
                 <div class="controls">
@@ -24,6 +23,5 @@
 
             <div asp-validation-summary="All" class="w-100 text-danger mt-4">
             </div>
-        </fieldset>
     </form>
 </div>
