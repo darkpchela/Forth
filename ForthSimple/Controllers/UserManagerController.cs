@@ -19,7 +19,7 @@ namespace ForthSimple.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var users = (List<UserVM>)userManageService.GetAll();
             return View(users);
@@ -50,7 +50,7 @@ namespace ForthSimple.Controllers
         }
 
         [NonAction]
-        private IEnumerable<string> GetUsersId(IEnumerable<UserVM> usersVM)
+        private IEnumerable<int> GetUsersId(IEnumerable<UserVM> usersVM)
         {
             var ids = usersVM.Where(u => u.Selected).Select(u => u.Id);
             return ids;

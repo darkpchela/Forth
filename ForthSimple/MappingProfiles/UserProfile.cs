@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Forth.Identity.Entities;
 using ForthSimple.ViewModels;
-using Microsoft.AspNetCore.Identity;
 
 namespace ForthSimple.MappingProfiles
 {
@@ -8,8 +8,8 @@ namespace ForthSimple.MappingProfiles
     {
         public UserProfile()
         {
-            CreateMap<UserVM, IdentityUser>().ReverseMap();
-            CreateMap<UserSignUpVM, IdentityUser>();
+            CreateMap<UserVM, User>().ReverseMap();
+            CreateMap<UserSignUpVM, User>();
             CreateMap<UserSignUpVM, UserSignInVM>();
         }
     }

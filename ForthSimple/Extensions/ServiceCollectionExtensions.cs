@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Forth.Identity.Entities;
 using ForthSimple.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace ForthSimple.Extensions
             {
                 options.UseSqlServer(connection);
             });
-            services.AddIdentity<IdentityUser, IdentityRole>(configs =>
+            services.AddIdentity<User, IdentityRole<int>>(configs =>
             {
                 configs.User.RequireUniqueEmail = true;
                 configs.Password = new PasswordOptions

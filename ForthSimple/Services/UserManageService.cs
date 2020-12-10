@@ -2,12 +2,10 @@
 using ForthSimple.Identity;
 using ForthSimple.Interfaces;
 using ForthSimple.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ForthSimple.Services
@@ -16,14 +14,11 @@ namespace ForthSimple.Services
     {
         private readonly IdentityContext dbContext;
         private readonly IMapper mapper;
-        private readonly IIdentityUnitOfWork identityUnitOfWork;
-        private readonly Claim BlockingClaim = new Claim("IsBlocked", "true");
 
-        public UserManageService(IdentityContext dbContext, IMapper mapper, IIdentityUnitOfWork identityUnitOfWork)
+        public UserManageService(IdentityContext dbContext, IMapper mapper)
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
-            this.identityUnitOfWork = identityUnitOfWork;
         }
 
         public IEnumerable<UserVM> GetAll()
@@ -33,43 +28,25 @@ namespace ForthSimple.Services
             return usersVM;
         }
 
-        public async Task<bool> BlockUsersAsync(IEnumerable<string> ids)
+        public async Task<bool> BlockUsersAsync(IEnumerable<int> ids)
         {
-            var users = await GetSelectedUsers(ids);
-            foreach (var user in users)
-            {
-                await identityUnitOfWork.UserManager.AddClaimAsync(user, BlockingClaim);
-            }
+            await dbContext.Users.Where(u => ids.Contains(u.Id)).ForEachAsync(u => u.IsBlocked = true);
             await dbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> UnblockUsersAsync(IEnumerable<string> ids)
+        public async Task<bool> UnblockUsersAsync(IEnumerable<int> ids)
         {
-            var users = await GetSelectedUsers(ids);
-            foreach (var user in users)
-            {
-               var res = await identityUnitOfWork.UserManager.RemoveClaimAsync(user, BlockingClaim);
-                if (!res.Succeeded)
-                    return false;
-            }
-            return true;
-        }
-
-        public async Task<bool> DeleteUsersAsync(IEnumerable<string> ids)
-        {
-            var users = await GetSelectedUsers(ids);
-            foreach (var user in users)
-            {
-            }
+            await dbContext.Users.Where(u => ids.Contains(u.Id)).ForEachAsync(u => u.IsBlocked = false);
             await dbContext.SaveChangesAsync();
             return true;
         }
 
-        private async Task<List<IdentityUser>> GetSelectedUsers(IEnumerable<string> ids)
+        public async Task<bool> DeleteUsersAsync(IEnumerable<int> ids)
         {
-            var selectedUsers = await dbContext.Users.Where(u => ids.Contains(u.Id)).ToListAsync();
-            return selectedUsers;
+            dbContext.RemoveRange(dbContext.Users.Where(u => ids.Contains(u.Id)));
+            await dbContext.SaveChangesAsync();
+            return true;
         }
     }
 }

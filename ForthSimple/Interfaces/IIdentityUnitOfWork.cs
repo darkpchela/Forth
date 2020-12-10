@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Forth.Identity.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace ForthSimple.Interfaces
 {
     public interface IIdentityUnitOfWork : IDisposable
     {
-        SignInManager<IdentityUser> SignInManager { get; }
-        UserManager<IdentityUser> UserManager { get; }
+        SignInManager<User> SignInManager { get; }
+        UserManager<User> UserManager { get; }
     }
 }

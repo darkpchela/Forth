@@ -58,7 +58,7 @@
                             <td>@Model[i].Email</td>
                             <td>@Model[i].RegisterDate.ToString()</td>
                             <td>@Model[i].LastOnlineDate.ToString()</td>
-                            @if (Model[i].Blocked)
+                            @if (Model[i].IsBlocked)
                             {
                                 <td>Blocked</td>
                             }
