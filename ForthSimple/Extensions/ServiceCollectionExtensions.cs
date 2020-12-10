@@ -42,7 +42,6 @@ namespace ForthSimple.Extensions
             })
                 .AddEntityFrameworkStores<IdentityContext>()
                 .AddDefaultTokenProviders();
-
             return services;
         }
     }

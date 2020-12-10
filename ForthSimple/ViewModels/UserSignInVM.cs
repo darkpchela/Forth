@@ -5,8 +5,7 @@ namespace ForthSimple.ViewModels
     public class UserSignInVM
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Login { get; set; }
 
 
         [Required]

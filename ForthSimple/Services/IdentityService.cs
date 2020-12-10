@@ -16,7 +16,7 @@ namespace ForthSimple.Services
 
         public async Task<bool> SignIn(UserSignInVM userVm)
         {
-            var res = await identityUnitOfWork.SignInManager.PasswordSignInAsync(userVm.Email, userVm.Password, false, false);
+            var res = await identityUnitOfWork.SignInManager.PasswordSignInAsync(userVm.Login, userVm.Password, false, false);
             return res.Succeeded;
         }
 
@@ -27,7 +27,11 @@ namespace ForthSimple.Services
 
         public async Task<bool> SignUp(UserSignUpVM userVm)
         {
-            var user = new IdentityUser { Email = userVm.Email, UserName = userVm.Email,/*, FirstName = userVm.FirstName, LastName = userVm.LastName */};
+            var user = new IdentityUser
+            {
+                Email = userVm.Email,
+                UserName = userVm.Login
+            };
             var res = await identityUnitOfWork.UserManager.CreateAsync(user, userVm.Password);
             return res.Succeeded;
         }

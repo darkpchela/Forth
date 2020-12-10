@@ -10,7 +10,7 @@ namespace ForthSimple.ViewModels
 
         [Required]
         [StringLength(50, MinimumLength = 1)]
-        public string UserName { get; set; }
+        public string Login { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 1)]
