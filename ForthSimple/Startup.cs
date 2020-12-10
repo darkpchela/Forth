@@ -4,7 +4,6 @@ using ForthSimple.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,14 +23,11 @@ namespace ForthSimple
         {
             services.AddControllersWithViews();
             services.AddAuthentication();
-            //string connection = Configuration.GetConnectionString("Default");
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/SignIn")
                 );
             services.AddControllersWithViews();
             services.AddAutomapperProfiles();
-            //services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
-            //services.AddTransient<ICookieBasedAuthenticationService, DefaultAuthenticationService>();
             services.AddTransient<IUserManageService, UserManageService>();
             services.AddIdentityContext(Configuration);
             services.AddTransient<IIdentityUnitOfWork, IdentityUnitOfWork>();
@@ -54,7 +50,7 @@ namespace ForthSimple
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseUserStatusValidator();
+            app.UseUserStatusValidator();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

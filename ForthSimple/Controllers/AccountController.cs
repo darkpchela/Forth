@@ -34,7 +34,7 @@ namespace ForthSimple.Controllers
             var signedUp = await identityService.SignUp(signUpVM);
             if (!signedUp)
             {
-                ModelState.AddModelError("Register error", "User already exists");
+                ModelState.AddModelError("Register error", "Login/Email already taken");
                 return View(signUpVM);
             }
             else

@@ -21,7 +21,7 @@ namespace ForthSimple.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<UserVM> GetAll()
+        public IEnumerable<UserVM> GetAllUsers()
         {
             var users = dbContext.Users.AsNoTracking();
             var usersVM = mapper.Map<IEnumerable<UserVM>>(users);

@@ -21,7 +21,7 @@ namespace ForthSimple.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var users = (List<UserVM>)userManageService.GetAll();
+            var users = (List<UserVM>)userManageService.GetAllUsers();
             return View(users);
         }
 

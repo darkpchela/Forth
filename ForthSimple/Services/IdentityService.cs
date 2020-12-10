@@ -24,8 +24,12 @@ namespace ForthSimple.Services
             var res = await identityUnitOfWork.SignInManager.PasswordSignInAsync(userVm.Login, userVm.Password, false, false);
             if (res.Succeeded)
             {
-                var user = identityContext.Users.FirstOrDefault(u => u.UserName == userVm.Login).LastOnlineDate = DateTime.Now;
-                await identityContext.SaveChangesAsync();
+                var user = identityContext.Users.FirstOrDefault(u => u.UserName == userVm.Login);
+                if (user != null)
+                {
+                    user.LastOnlineDate = DateTime.Now;
+                    await identityContext.SaveChangesAsync();
+                }
             }
             return res.Succeeded;
         }

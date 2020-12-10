@@ -6,7 +6,7 @@ namespace ForthSimple.Interfaces
 {
     public interface IUserManageService
     {
-        IEnumerable<UserVM> GetAll();
+        IEnumerable<UserVM> GetAllUsers();
 
         Task<bool> BlockUsersAsync(IEnumerable<int> ids);
 

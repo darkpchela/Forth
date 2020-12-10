@@ -1,7 +1,6 @@
 ﻿using ForthSimple.Identity;
 using ForthSimple.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace ForthSimple.Middlewares
@@ -15,18 +14,17 @@ namespace ForthSimple.Middlewares
             this._next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IdentityContext dbContext, ICookieBasedAuthenticationService authenticationService)
+        public async Task InvokeAsync(HttpContext context, IdentityContext dbContext, IIdentityUnitOfWork identityUnitOfWork)
         {
-            //if (context.User.Identity.IsAuthenticated)
-            //{
-            //    string login = context.User.Identity.Name;
-            //    var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Email == login);
-            //    if (user == null || user.Blocked == true)
-            //    {
-            //        await authenticationService.LogoutAsync(context);
-            //        context.Response.Redirect("/Account/Exception");
-            //    }
-            //}
+            if (context.User.Identity.IsAuthenticated)
+            {
+                var user = await identityUnitOfWork.UserManager.GetUserAsync(context.User);
+                if (user == null || user.IsBlocked == true)
+                {
+                    await identityUnitOfWork.SignInManager.SignOutAsync();
+                    context.Response.Redirect("/Account/Exception");
+                }
+            }
             await _next.Invoke(context);
         }
     }
