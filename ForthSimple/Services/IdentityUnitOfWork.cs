@@ -1,5 +1,4 @@
-﻿using ForthSimple.Identity.Entities;
-using ForthSimple.Interfaces;
+﻿using ForthSimple.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 
@@ -7,11 +6,11 @@ namespace ForthSimple.Services
 {
     public class IdentityUnitOfWork : IIdentityUnitOfWork
     {
-        public SignInManager<User> SignInManager { get; set; }
+        public SignInManager<IdentityUser> SignInManager { get; set; }
 
-        public UserManager<User> UserManager { get; set; }
+        public UserManager<IdentityUser> UserManager { get; set; }
 
-        public IdentityUnitOfWork(UserManager<User> userManager, SignInManager<User> signInManager)
+        public IdentityUnitOfWork(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
