@@ -1,6 +1,5 @@
 using ForthSimple.Extensions;
 using ForthSimple.Interfaces;
-using ForthSimple.Models;
 using ForthSimple.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -25,7 +24,7 @@ namespace ForthSimple
         {
             services.AddControllersWithViews();
             services.AddAuthentication();
-            string connection = Configuration.GetConnectionString("Default");
+            //string connection = Configuration.GetConnectionString("Default");
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/SignIn")
                 );
@@ -33,7 +32,7 @@ namespace ForthSimple
             services.AddAutomapperProfiles();
             //services.AddDbContext<ForthDbContext>(options => options.UseSqlServer(connection));
             //services.AddTransient<ICookieBasedAuthenticationService, DefaultAuthenticationService>();
-            //services.AddTransient<IUserManageService, DefaultUserManageService>();
+            services.AddTransient<IUserManageService, UserManageService>();
             services.AddIdentityContext(Configuration);
             services.AddTransient<IIdentityUnitOfWork, IdentityUnitOfWork>();
             services.AddTransient<IIdentityService, IdentityService>();

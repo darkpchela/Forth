@@ -50,7 +50,7 @@ namespace ForthSimple.Controllers
         }
 
         [NonAction]
-        private IEnumerable<int> GetUsersId(IEnumerable<UserVM> usersVM)
+        private IEnumerable<string> GetUsersId(IEnumerable<UserVM> usersVM)
         {
             var ids = usersVM.Where(u => u.Selected).Select(u => u.Id);
             return ids;

@@ -8,10 +8,10 @@ namespace ForthSimple.Interfaces
     {
         IEnumerable<UserVM> GetAll();
 
-        Task<bool> BlockUsersAsync(IEnumerable<int> ids);
+        Task<bool> BlockUsersAsync(IEnumerable<string> ids);
 
-        Task<bool> UnblockUsersAsync(IEnumerable<int> ids);
+        Task<bool> UnblockUsersAsync(IEnumerable<string> ids);
 
-        Task<bool> DeleteUsersAsync(IEnumerable<int> ids);
+        Task<bool> DeleteUsersAsync(IEnumerable<string> ids);
     }
 }
